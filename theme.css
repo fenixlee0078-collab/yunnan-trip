@@ -1,0 +1,33 @@
+/* 主题：grassland（由 create_trip.py 自动生成） */
+:root{
+  --ink:#1E2818;
+  --ink2:#4A5446;
+  --ink3:#87947E;
+  --paper:#F3F5EA;
+  --card:#FFFFFF;
+  --line:#DEE3CE;
+  --forest:#2E4018;
+  --forest2:#4E6E28;
+  --moss:#7A9A50;
+  --clay:#B46A3A;
+  --sun:#D9A24A;
+  --fog:#EDF1E0;
+  --shadow:0 2px 4px rgba(20,30,24,.04), 0 12px 28px rgba(20,30,24,.08);
+
+  --hero-grad:linear-gradient(160deg,#1C280E 0%,#2E4018 45%,#4E6E28 100%);
+  --hero-text:#F2F5E8;
+  --hero-sub:#C4D4A0;
+  --glow-rgb:217,162,74;
+  --fog-rgb:24,32,10;
+
+  --next-grad:linear-gradient(135deg,#243410 0%,#3A5220 52%,#4E6E28 100%);
+  --next-sub:#C4D4A0;
+  --next-label:#9BB27E;
+  --next-num:#D8E4B8;
+
+  --hill-sun:#D9A24A;
+  --hill1:#4E6E28;
+  --hill2:#3A5220;
+  --hill3:#243410;
+  --hill4:#1A260C;
+}
