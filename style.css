@@ -1,0 +1,1025 @@
+/* 主题色变量（--ink / --hero-grad / --glow-rgb 等）统一放在 theme.css，
+   由生成器按目的地风格覆盖；style.css 只引用 var()，不再内联任何主题色。 */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+  font-size:15px;
+  line-height:1.75;
+  /* 全局兜底：任何地方出现长到放不下的文本（长站名、长英文串）都在必要时折断，
+     而不是横着冲出卡片。正常排版不受影响 —— 只在放不下时才生效。 */
+  overflow-wrap:anywhere;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:40px;
+}
+.wrap{max-width:900px;margin:0 auto;padding:0 22px}
+h1,h2,h3,p,ul,ol,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+/* ---------- 操作提示 ---------- */
+#tip{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(6px);
+  background:var(--forest);color:var(--on-forest,#EAF1EB);font-size:12.5px;padding:7px 16px;border-radius:999px;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:100;white-space:nowrap;max-width:90vw}
+#tip.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- Hero 封面 ---------- */
+.hero{
+  position:relative;margin-top:20px;border-radius:22px;overflow:hidden;
+  background:var(--hero-grad);
+  color:var(--hero-text);min-height:232px;display:flex;flex-direction:column;justify-content:flex-end;
+  box-shadow:var(--shadow);
+}
+.hero-media{position:absolute;inset:0}
+.hero-media .hills{position:absolute;inset:0;width:100%;height:100%}
+.hero-media .glow{
+  position:absolute;width:200px;height:200px;border-radius:50%;right:-34px;top:-52px;
+  background:radial-gradient(circle,rgba(var(--glow-rgb),.35),rgba(var(--glow-rgb),0) 70%);
+}
+.hero-media .fog{
+  position:absolute;left:0;right:0;bottom:0;height:52%;
+  background:linear-gradient(to top,rgba(var(--fog-rgb),.92) 0%,rgba(var(--fog-rgb),.55) 40%,rgba(var(--fog-rgb),0) 100%);
+}
+.hero-inner{position:relative;padding:26px 34px 24px}
+.eyebrow{
+  font-size:11.5px;letter-spacing:.36em;text-transform:uppercase;
+  color:var(--sun);margin-bottom:9px;font-weight:600;
+}
+.hero h1{
+  font-size:clamp(30px,5.6vw,46px);line-height:1.12;font-weight:800;letter-spacing:.02em;
+  margin-bottom:8px;text-shadow:0 2px 18px rgba(0,0,0,.35);
+}
+.hero .sub{font-size:14.5px;color:var(--hero-sub);margin-bottom:16px;max-width:560px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.chip{
+  font-size:12.5px;padding:6px 13px;border-radius:999px;
+  background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);
+  color:var(--t-a,#EDF3EE);backdrop-filter:blur(6px);white-space:nowrap;
+}
+.chip b{font-weight:600}
+.chip.edit{
+  background:rgba(var(--glow-rgb),.22);border-color:rgba(var(--glow-rgb),.45);cursor:pointer;
+  transition:background .18s;
+}
+.chip.edit:hover{background:rgba(var(--glow-rgb),.38)}
+
+/* ---------- 下一项提醒 ---------- */
+.nextsec{margin-top:24px}
+.next-card{
+  position:relative;overflow:hidden;border-radius:20px;
+  background:var(--next-grad);
+  color:var(--hero-text);padding:24px 26px;display:flex;align-items:center;gap:24px;
+  box-shadow:0 3px 6px rgba(20,40,30,.08),0 16px 34px rgba(20,40,30,.18);
+}
+.next-card::after{
+  content:"";position:absolute;right:-70px;top:-90px;width:250px;height:250px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--glow-rgb),.30),rgba(var(--glow-rgb),0) 68%);pointer-events:none;
+}
+.next-main{flex:1;min-width:0;position:relative;z-index:1}
+.next-eyebrow{display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.26em;
+  color:var(--sun);font-weight:700;text-transform:uppercase;margin-bottom:9px}
+.next-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--sun);flex:none;
+  box-shadow:0 0 0 3px rgba(var(--glow-rgb),.28);animation:nx-pulse 2.2s ease-out infinite}
+@keyframes nx-pulse{0%{box-shadow:0 0 0 3px rgba(var(--glow-rgb),.30)}70%{box-shadow:0 0 0 10px rgba(var(--glow-rgb),0)}100%{box-shadow:0 0 0 3px rgba(var(--glow-rgb),.30)}}
+.next-title{font-size:clamp(19px,3.2vw,26px);font-weight:800;line-height:1.3;letter-spacing:.01em}
+.next-meta{font-size:12.5px;color:var(--next-sub);margin-top:7px;line-height:1.6}
+.next-count{text-align:right;flex:none;position:relative;z-index:1}
+.next-count-label{font-size:11px;letter-spacing:.2em;color:var(--next-label);margin-bottom:5px}
+.next-count-num{font-size:clamp(20px,3.6vw,30px);font-weight:800;color:var(--sun);white-space:nowrap;line-height:1.15}
+.next-count-num small{font-size:.52em;font-weight:600;color:var(--next-num);margin:0 2px}
+.next-note{margin-top:11px;font-size:12.5px;color:#6B5730;background:#FFF8E9;border:1px solid #EFDFB8;
+  border-left:3px solid var(--sun);border-radius:11px;padding:9px 14px;cursor:pointer}
+.next-note:hover{background:#FCF3DC}
+
+/* ---------- 区块标题 ---------- */
+.sec{margin-top:46px}
+.sec-head{display:flex;align-items:flex-end;gap:14px;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.sec-head h2{font-size:22px;font-weight:800;letter-spacing:.01em;color:var(--forest)}
+.sec-head .en{margin-left:auto;font-size:11px;letter-spacing:.24em;color:var(--ink3);text-transform:uppercase}
+.tip-inline{font-size:12px;color:var(--ink3);white-space:nowrap;flex:none}
+
+/* ---------- 时间轴 ---------- */
+.timeline{position:relative;padding-left:0}
+.timeline::before{
+  content:"";position:absolute;left:39px;top:24px;bottom:38px;width:2px;
+  background:repeating-linear-gradient(to bottom,rgba(110,143,118,.55) 0 6px,transparent 6px 13px);
+}
+.day{
+  position:relative;display:grid;grid-template-columns:80px 1fr;gap:20px;
+  margin-bottom:18px;
+}
+.day-rail{position:relative;text-align:center;padding-top:18px}
+.day-num{
+  width:56px;height:56px;margin:0 auto;border-radius:50%;
+  background:var(--forest);color:#F1EFE4;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:19px;letter-spacing:.02em;position:relative;z-index:2;
+  box-shadow:0 0 0 4px var(--paper),0 6px 16px rgba(30,58,47,.28);
+}
+.day-num em{font-style:normal}
+.day-date{font-size:11.5px;color:var(--ink3);margin-top:9px;letter-spacing:.04em;word-break:keep-all;line-height:1.5}
+.day-main{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:16px 24px 22px;box-shadow:var(--shadow);position:relative;
+}
+/* 顶部只有收起按钮（和对已结束的说明），不再显示每日主题/副标题/标签 */
+.day-bar{
+  display:flex;align-items:center;justify-content:flex-end;gap:8px;min-height:30px;margin-bottom:2px;
+}
+/* 「已结束」小标：日期早于今天的天，默认收起时给个说明，免得以为丢了内容 */
+.day-over{
+  padding:2px 9px;border-radius:999px;
+  font-size:11px;font-weight:600;letter-spacing:.02em;
+  background:var(--fog);color:var(--ink3);border:1px solid var(--line);
+  margin-right:auto;
+}
+.tl{margin-top:6px;border-top:1px dashed var(--line)}
+.tl-item{position:relative;border-bottom:1px dashed var(--line)}
+.tl-item:last-child{border-bottom:0}
+.tl-item .item-row{
+  display:grid;grid-template-columns:78px 1fr;gap:14px;align-items:flex-start;
+  padding:12px 0;cursor:pointer;position:relative;
+}
+.tl-item .item-row:hover{background:linear-gradient(90deg,transparent,rgba(110,143,118,.06))}
+.tl-item.no-time .item-row{grid-template-columns:1fr}
+.tl .time{font-size:12.5px;font-weight:700;color:var(--clay);letter-spacing:.02em;padding-top:1px}
+/* 交通条目在时间列里显示「出发 → 到达」两行：出发时间是主色，到达时间弱一档 */
+.tl .time .time2{display:block;font-size:12px;font-weight:600;color:var(--ink3);letter-spacing:0}
+/* 交通条目的地读作「出发站 → 到达站」：箭头只是分隔符，别让它看起来像可点的链接 */
+.tl .body .t .pin-sep{color:var(--ink3);margin:0 3px;font-size:12.5px;cursor:default}
+.tl .body{min-width:0}
+.tl .body .t{font-weight:600;font-size:14.5px;color:var(--ink);overflow-wrap:anywhere;word-break:break-word}
+/* 地点标签必须允许折行。
+   这里以前写着 white-space:nowrap，本意是别把「📍地名」拆开，
+   但遇到长站名（Krang Thep Aphiwat Central Terminal Station (Bang Sue Grand Station)）
+   整行就横着冲出卡片，手机上整页都能左右拖。改成 anywhere + break-word：
+   正常短地名一行放得下就还是一行，放不下才折，长英文串也能在词中间断开。 */
+.tl .body .t .pin{color:var(--moss);cursor:pointer;border-radius:5px;padding:1px 4px;margin:-1px -4px;
+  transition:background .14s;overflow-wrap:anywhere;word-break:break-word}
+.tl .body .t .pin:hover{background:rgba(110,143,118,.13)}
+.tl .body .t .pin:active{background:rgba(110,143,118,.22)}
+/* 长按中：给点触感反馈，松开/长按生效即恢复 */
+.tl-item .item-row.pressing{background:linear-gradient(90deg,transparent,rgba(110,143,118,.14))}
+/* 别让长按把文字选中（2026-09-22）。
+   长按 500ms 触发编辑弹窗时手指还在屏幕上，浏览器会顺手把手指底下那段文字选起来，
+   弹窗盖上去之后那个蓝色高亮和拷贝菜单还赖着不走。整页禁掉选取，只有输入框/文本域放行
+   —— 备注、地点名要能选能复制的地方照旧；-webkit-touch-callout 管 iOS 的长按呼出菜单。 */
+html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea,select,[contenteditable="true"]{
+  -webkit-user-select:text;user-select:text;-webkit-touch-callout:default;
+}
+.tl .body .n{font-size:13px;color:var(--ink2);margin-top:2px;overflow-wrap:anywhere;word-break:break-word}
+.tl .body .n:empty{display:none}
+.day-foot{
+  margin-top:14px;padding-top:13px;border-top:1px dashed var(--line);
+  font-size:13px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:6px 20px;cursor:pointer;
+}
+/* 住宿那一行，flex 子项要给 min-width:0 才肯收缩，否则长酒店名会把整卡撑宽 */
+.day-foot span{min-width:0;overflow-wrap:anywhere;word-break:break-word}
+.day-foot b{color:var(--forest2);font-weight:600}
+.day-foot:hover{color:var(--forest2)}
+
+/* 完成态（历史数据里 done 仍为 true 的条目照常显示为已划线） */
+.tl-item.done .t{text-decoration:line-through;color:var(--ink3)}
+.tl-item.done .n{color:var(--ink3);text-decoration:line-through}
+.tl-item.done .time{color:var(--ink3);text-decoration:line-through}
+
+/* 添加/删除按钮 */
+.addbtn{
+  display:inline-flex;margin-top:14px;font-size:12.5px;padding:7px 15px;border-radius:999px;
+  border:1.5px dashed #C3B79C;color:#8A7A56;background:#FDFAF3;transition:.18s;
+}
+.addbtn:hover{background:#F7F0DF;border-color:var(--clay);color:var(--clay)}
+.addbtn.block{display:flex;margin:18px auto 0}
+.rowbtns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+/* ---------- 每天底部的操作按钮组 ---------- */
+.day-acts{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.day-acts .addbtn{margin-top:0}
+.sortbtn{
+  display:inline-flex;align-items:center;gap:5px;font-size:12.5px;padding:7px 15px;border-radius:999px;
+  border:1px solid var(--line);color:var(--ink2);background:#fff;transition:.18s;
+}
+.sortbtn:hover{border-color:var(--forest2);color:var(--forest2)}
+.sortbtn.on{border-color:var(--forest2);background:var(--fog);color:var(--forest);font-weight:600}
+.sort-hint{font-size:12px;color:var(--ink3);margin-top:9px;letter-spacing:.02em}
+
+/* ---------- 调整顺序（上移/下移按钮） ---------- */
+.tl-item{position:relative}
+/* 排序模式下整行左侧加一道竖线，一眼看出哪些行在可调整状态 */
+.tl-item.sortable::before{
+  content:"";position:absolute;left:-10px;top:6px;bottom:6px;width:2px;border-radius:2px;
+  background:var(--forest2);opacity:.45;
+}
+/* 排序模式下多出按钮列，网格改成三列，按钮才能跟内容同行靠右 */
+.tl-item.sortable .item-row{grid-template-columns:78px 1fr auto}
+.tl-item.sortable.no-time .item-row{grid-template-columns:1fr auto}
+.move-btns{display:flex;flex-direction:column;gap:5px;align-self:center;flex:none;margin-left:6px}
+.mvbtn{
+  width:34px;height:30px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink2);
+  transition:.16s;padding:0;-webkit-tap-highlight-color:transparent;
+}
+.mvbtn:hover:not(:disabled){border-color:var(--forest2);color:var(--forest2);background:var(--fog)}
+.mvbtn:active:not(:disabled){transform:scale(.94)}
+.mvbtn:disabled{opacity:.3;cursor:default}
+.mvbtn svg{display:block}
+/* 排序模式下整行不再可点（点了会跳导航），光标保持默认 */
+.tl-item.sortable .item-row{cursor:default}
+.mini{font-size:12px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);color:var(--ink2);background:#fff}
+.mini:hover{border-color:var(--clay);color:var(--clay)}
+.mini.warn:hover{border-color:#C05A4A;color:#C05A4A}
+
+/* ---------- 页脚 ---------- */
+.foot{
+  margin:56px auto 0;text-align:center;padding:34px 22px 40px;
+  border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px;
+}
+.foot .mark{font-size:19px;font-weight:800;color:var(--forest);letter-spacing:.14em;margin-bottom:7px}
+.foot-links{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:16px;flex-wrap:wrap}
+.foot-link{
+  font-size:13px;color:var(--ink2);border:1px solid var(--line);border-radius:999px;
+  padding:7px 16px;background:#fff;cursor:pointer;transition:.18s;
+}
+.foot-link:hover{border-color:var(--forest2);color:var(--forest2)}
+.foot-presence{
+  margin-top:12px;font-size:12px;color:var(--ink3);
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.presence-dot{width:8px;height:8px;border-radius:50%;background:#fbbf24;flex:none}
+.presence-dot.online{background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.25)}
+
+/* ---------- 弹窗 ---------- */
+.modal-mask{
+  position:fixed;inset:0;background:rgba(17,24,39,.45);
+  display:none;align-items:flex-end;justify-content:center;z-index:200;
+}
+.modal-mask.show{display:flex}
+.modal{
+  background:#fff;width:100%;max-width:520px;border-radius:20px 20px 0 0;
+  max-height:88vh;overflow-y:auto;animation:slideUp .22s ease;
+}
+@media (min-width:560px){
+  .modal-mask{align-items:center;padding:20px}
+  .modal{border-radius:20px}
+}
+/* 键盘弹起时不再由 JS 摆布弹窗位置 —— 地址输入已经移到独立面板里了。
+   曾经这里有一条 .modal-mask.show.top-align{align-items:flex-start}，
+   配合 JS 算 top 值来避开键盘，但那只是把「底部够不着」换成「顶部被顶出屏幕」，
+   两种情况都必然有一端看不见。现在弹窗保持底部对齐、不做任何键盘适配。 */
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2;
+}
+.modal-head h3{font-size:17px;font-weight:800;color:var(--forest)}
+.modal-close{border:none;background:#f3f4f6;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;color:var(--ink2)}
+.modal-close:hover{background:#e5e7eb}
+.modal-body{padding:18px}
+.modal-foot{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line);position:sticky;bottom:0;background:#fff;z-index:2}
+.modal-foot .btn-primary{flex:1}
+.modal-sm{max-width:400px}
+.field-row{margin-bottom:14px}
+.field-row label{display:block;font-size:12.5px;font-weight:600;color:var(--ink3);margin-bottom:6px;letter-spacing:.02em}
+.field-row input,.field-row textarea{
+  width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:15px;font-family:inherit;outline:none;background:#fff;
+}
+.field-row textarea{min-height:64px;resize:vertical}
+.field-row select{
+  width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:15px;font-family:inherit;outline:none;background:#fff;color:var(--ink);
+}
+.field-row input:focus,.field-row textarea:focus,.field-row select:focus{border-color:var(--forest2);box-shadow:0 0 0 3px rgba(47,93,72,.1)}
+/* 住宿范围：两个下拉 + 一个「铺满这段」按钮，一行放得下（窄屏会换行） */
+.stay-range{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+.stay-range .sr-group{display:flex;align-items:center;gap:8px}
+.stay-range .sr-tag{flex:0 0 auto;min-width:31px;font-size:12.5px;color:var(--ink3);white-space:nowrap}
+.stay-range select{flex:1 1 0;width:auto;min-width:0;padding:9px 8px;font-size:13.5px}
+.stay-range .mini{flex:0 0 auto;white-space:nowrap}
+.field-row .half{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* 金额算式实时计算提示 */
+.calc-hint{min-height:0;font-size:12.5px;margin-top:5px;letter-spacing:.02em;display:none}
+.calc-hint.show{display:block}
+.calc-hint.ok{color:var(--forest2);font-weight:700}
+.calc-hint.err{color:#C05A4A}
+
+/* ---------- 币种与汇率（海外 / 港澳台行程记外币） ---------- */
+/* 这一行只在非人民币行程出现，由 renderFxUI() 控制 .field-row#fx-row 的显隐 */
+.fx-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fx-line #e-currency{flex:0 0 auto;width:auto;min-width:130px;padding:9px 10px;font-size:14px}
+.fx-rate{display:flex;align-items:center;gap:6px;flex:1 1 150px;min-width:0;font-size:12.5px;color:var(--ink3);white-space:nowrap}
+.fx-rate .fx-lbl{flex:0 0 auto}
+.fx-rate .fx-lbl b{color:var(--ink2);font-weight:700}
+/* 覆盖 .field-row input 的 width:100% —— 汇率框要跟前面那句「1 THB ≈」挤在同一行 */
+.field-row .fx-rate input{flex:1 1 50px;width:auto;min-width:42px;padding:7px 8px;font-size:13px;text-align:right}
+.fx-rate .fx-unit{flex:0 0 auto}
+.fx-refresh{
+  flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+  background:#fff;color:var(--ink2);font-size:14px;line-height:1;cursor:pointer;transition:.18s;
+}
+.fx-refresh:hover{border-color:var(--forest2);color:var(--forest2)}
+.fx-refresh:disabled{opacity:.45;cursor:default}
+@keyframes fxSpin{to{transform:rotate(360deg)}}
+.fx-refresh.loading{animation:fxSpin .9s linear infinite}
+.fx-foot{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:7px}
+.fx-conv{font-size:13px;font-weight:700;color:var(--forest2);letter-spacing:.02em;word-break:break-word}
+.fx-conv.wait{font-weight:400;color:var(--ink3)}
+.fx-conv.err{font-weight:400;color:#C05A4A}
+.fx-src{flex:none;font-size:11.5px;color:var(--ink3);white-space:nowrap}
+/* 外币条目的原币小字：主数字是人民币，这行还原当时花的原币 */
+.exp-amt .o{font-size:11px;color:var(--ink3);white-space:nowrap}
+
+/* ---------- 编辑弹窗里的「到这里的交通」 ---------- */
+.leg-modes{display:flex;gap:7px;flex-wrap:wrap}
+.leg-mode{
+  flex:1 1 auto;min-width:70px;padding:9px 8px;border-radius:11px;border:1.5px solid var(--line);
+  background:#fff;color:var(--ink2);font-size:13.5px;font-weight:600;cursor:pointer;
+  font-family:inherit;transition:.16s;-webkit-tap-highlight-color:transparent;
+}
+.leg-mode:hover{border-color:var(--forest2);color:var(--forest2)}
+.leg-mode.on{border-color:var(--forest);background:var(--fog);color:var(--forest)}
+.leg-info{margin-top:9px}
+.leg-from{font-size:12.5px;color:var(--ink2);margin-bottom:6px;overflow-wrap:anywhere}
+.leg-from b{color:var(--forest2)}
+/* 「从 <酒店> 过来」后面那个小标记：告诉用户这个起点是住宿自动带出来的，不是上一站 */
+.leg-from .leg-tag{display:inline-block;margin-left:6px;padding:0 7px;border-radius:999px;font-size:11px;font-weight:600;line-height:1.7;background:var(--fog);color:var(--forest);vertical-align:1px;cursor:default}
+.leg-hint{font-size:12.5px;color:var(--ink3);line-height:1.5}
+.leg-hint.wait{color:var(--moss)}
+.leg-hint.err{color:#C05A4A}
+.leg-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:13px;color:var(--ink2)}
+.leg-line .leg-ico{font-size:15px;line-height:1}
+/* 覆盖 .field-row input 的 width:100% —— 分钟数要跟图标、单位挤在同一行 */
+.field-row .leg-line input.leg-min{
+  flex:0 0 auto;width:62px;min-width:0;padding:6px 8px;font-size:14px;
+  text-align:center;font-weight:700;color:var(--forest2);
+}
+.leg-unit{font-size:12.5px;color:var(--ink3)}
+.leg-dst{font-size:12.5px;color:var(--ink3)}
+.leg-src{font-size:11px;color:var(--ink3);border:1px solid var(--line);border-radius:999px;padding:1px 7px}
+.leg-refresh{
+  flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+  background:#fff;color:var(--ink2);font-size:14px;line-height:1;cursor:pointer;
+}
+.leg-refresh:hover{border-color:var(--forest2);color:var(--forest2)}
+.leg-map{
+  flex:0 0 auto;padding:6px 12px;border-radius:999px;border:1.5px solid var(--forest);
+  background:#fff;color:var(--forest);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;
+}
+.leg-map:hover{background:var(--fog)}
+/* 列表里行程项下面那行耗时小字 */
+.tl .body .leg{font-size:12px;color:var(--moss);margin-top:3px;display:flex;align-items:center;gap:4px}
+.tl .body .leg .leg-ico{font-size:12.5px;line-height:1}
+.tl-item.done .leg{color:var(--ink3);text-decoration:line-through}
+
+/* ---------- 内嵌计算器 ---------- */
+.calc-panel{
+  display:none;margin-top:10px;border:1px solid var(--line);border-radius:14px;
+  background:var(--t-a,#FBFCFA);padding:10px 10px 12px;animation:calcIn .2s ease;
+}
+.calc-panel.show{display:block}
+@keyframes calcIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.calc-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.calc-tag{font-size:11.5px;font-weight:700;color:var(--ink3);letter-spacing:.06em}
+.calc-collapse{
+  border:none;background:transparent;color:var(--forest2);font-size:12.5px;
+  font-weight:600;cursor:pointer;padding:2px 6px;border-radius:8px;font-family:inherit;
+}
+.calc-collapse:hover{background:rgba(47,93,72,.08)}
+.calc-screen{
+  background:#fff;border:1px solid var(--line);border-radius:11px;
+  padding:9px 12px;text-align:right;margin-bottom:9px;min-height:56px;
+}
+.calc-expr{
+  font-size:19px;font-weight:700;color:var(--ink);line-height:1.35;
+  word-break:break-all;font-variant-numeric:tabular-nums;
+}
+.calc-res{font-size:12.5px;color:var(--forest2);font-weight:700;margin-top:3px;min-height:0}
+.calc-res:empty{display:none}
+.calc-res.err{color:#C05A4A}
+.calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.ck{
+  border:1px solid var(--line);background:#fff;border-radius:11px;
+  padding:13px 0;font-size:17px;font-weight:600;color:var(--ink);
+  cursor:pointer;font-family:inherit;transition:background .12s,transform .08s;
+  -webkit-tap-highlight-color:transparent;
+}
+.ck:active{transform:scale(.96);background:var(--t-a,#F1F4F1)}
+.ck.op{color:var(--forest2);background:var(--t-a,#F2F7F3)}
+.ck.fn{color:var(--ink2);background:var(--t-a,#F7F7F5);font-size:15px}
+.ck.eq{background:var(--forest);color:#fff;border-color:var(--forest)}
+.ck.eq:active{background:var(--forest2)}
+.calc-done{
+  width:100%;margin-top:9px;border:none;border-radius:11px;
+  background:var(--forest);color:#fff;font-size:14px;font-weight:700;
+  padding:11px 0;cursor:pointer;font-family:inherit;
+}
+.calc-done:active{background:var(--forest2)}
+
+.muted{color:var(--ink3);font-size:13px}
+/* 地点坐标状态 + 校准按钮 */
+.coord-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.coord-state{font-size:12px;color:var(--ink3);flex:1;min-width:0}
+.coord-state.ok{color:var(--forest2);font-weight:600}
+.coord-state.preset{color:var(--ink2)}
+.coord-state.warn{color:#B4795A}
+
+/* ---------- 编辑弹窗里的「地点」展示行 ----------
+   不再放输入框：点它开独立的搜索面板。这样弹窗里就没有会被键盘遮住的输入框了。 */
+.place-field{
+  width:100%;display:flex;align-items:center;gap:9px;
+  padding:11px 13px;border:1px solid var(--line);border-radius:11px;
+  background:#fff;cursor:pointer;text-align:left;font:inherit;color:var(--ink);
+  transition:.16s;-webkit-tap-highlight-color:transparent;
+}
+.place-field:hover{border-color:var(--forest2);background:var(--fog)}
+.place-field:active{transform:scale(.995)}
+.place-field.has-place{background:var(--t-a,#F2F7F4);border-color:var(--forest2)}
+.place-field .pf-ico{flex:none;font-size:14px;line-height:1}
+.place-field .pf-text{
+  flex:1;min-width:0;font-size:14px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.place-field .pf-text.empty{color:var(--ink3)}
+.place-field .pf-clear{
+  flex:none;width:22px;height:22px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(24,44,34,.08);color:var(--ink2);font-size:12px;line-height:1;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+.place-field .pf-clear:hover{background:rgba(24,44,34,.16)}
+.place-field .pf-clear[hidden]{display:none}
+.place-field .pf-arrow{flex:none;color:var(--ink3);font-size:17px;line-height:1;margin-left:-2px}
+
+/* ---------- 子地点（父地点下面挂的具体店铺 / 点位） ---------- */
+.field-row label .lbl-hint{font-weight:400;color:var(--ink3);opacity:.85;letter-spacing:0}
+.sub-list{display:flex;flex-direction:column;gap:6px}
+.sub-list:empty{display:none}
+.sub-item{
+  display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:10px;
+  background:var(--t-a,#F7FAF8);padding:8px 8px 8px 11px;
+}
+.sub-item .si-row{display:flex;align-items:center;gap:8px}
+.sub-item .si-main{
+  flex:1;min-width:0;display:flex;align-items:center;gap:6px;cursor:pointer;
+  border:none;background:transparent;padding:0;font-family:inherit;text-align:left;
+}
+.sub-item .si-ico{flex:none;font-size:13px;line-height:1}
+.sub-item .si-name{font-size:14px;color:var(--ink);font-weight:600;overflow-wrap:anywhere}
+.sub-item .si-hint{flex:none;font-size:11.5px;color:var(--ink3)}
+.sub-item .si-del{
+  flex:none;border:none;background:transparent;color:var(--ink3);cursor:pointer;
+  font-size:14px;line-height:1;padding:4px 7px;border-radius:8px;font-family:inherit;
+}
+.sub-item .si-del:hover{background:rgba(192,90,74,.12);color:#C05A4A}
+/* 子地点备注：跟着这一条走，打完失焦就自动存，不用再点「保存」 */
+.sub-item .si-note{
+  width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;
+  background:#fff;padding:6px 9px;font-size:13px;line-height:1.4;font-family:inherit;
+  color:var(--ink);outline:none;
+}
+.sub-item .si-note::placeholder{color:var(--ink3);opacity:.85}
+.sub-item .si-note:focus{border-color:var(--forest2);background:var(--fog,#F4F8F5)}
+.sub-add{
+  margin-top:8px;width:100%;border:1px dashed var(--line);background:#fff;color:var(--forest2);
+  border-radius:10px;padding:10px;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer;
+}
+.sub-add:hover{border-color:var(--forest2);background:var(--fog,#F4F8F5)}
+.sub-add:disabled{color:var(--ink3);border-color:var(--line);background:#FAFAFA;cursor:not-allowed}
+.sub-empty{font-size:12.5px;color:var(--ink3);padding:1px 2px 0}
+/* 子地点的类型（2026-09-22）：跟父条目弹窗顶部那排同一套类型，卡片窄所以做小一号的 4 格。
+   选了「餐饮」+ 国内行程，点这个子地点就跟父地点一样弹「高德 / 大众点评」双选。 */
+.sub-item .si-types{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.sub-item .si-type{
+  padding:6px 2px;border:1.5px solid var(--line);border-radius:9px;background:#fff;
+  font-size:12px;font-weight:600;color:var(--ink2);font-family:inherit;cursor:pointer;
+  white-space:nowrap;transition:.16s;
+}
+.sub-item .si-type:active{transform:scale(.97)}
+.sub-item .si-type.on{border-color:var(--forest2);background:var(--fog);color:var(--forest)}
+/* 子地点的小红书链接：跟备注一个规矩 —— 打完失焦自动存，不用再点「保存」 */
+.sub-item .si-xhs-row{display:flex;align-items:center;gap:6px}
+.sub-item .si-xhs{
+  flex:1;min-width:0;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;
+  background:#fff;padding:6px 9px;font-size:13px;line-height:1.4;font-family:inherit;
+  color:var(--ink);outline:none;
+}
+.sub-item .si-xhs::placeholder{color:var(--ink3);opacity:.85}
+.sub-item .si-xhs:focus{border-color:var(--forest2);background:var(--fog,#F4F8F5)}
+.sub-item .si-xhs-go{
+  flex:none;border:1px solid var(--line);background:#fff;border-radius:8px;
+  padding:6px 9px;font-size:13px;line-height:1;font-family:inherit;cursor:pointer;
+}
+.sub-item .si-xhs-go[hidden]{display:none}
+
+/* 时间线里的子地点行：挂在父地点下面，缩进 + 小字号 */
+.tl .body .subs{list-style:none;margin:3px 0 0;padding:0;display:flex;flex-direction:column;gap:1px}
+/* 纵向 flex 的子项同样要给 min-width:0，否则长子地点名会顶宽整列 */
+.tl .body .subs li{min-width:0}
+.tl .body .subs .pin{
+  color:var(--moss);cursor:pointer;border-radius:5px;padding:1px 4px;margin:0 -4px;
+  font-size:13px;font-weight:500;display:inline-block;max-width:100%;
+  overflow-wrap:anywhere;word-break:break-word;
+}
+.tl .body .subs .pin::before{content:'↳ ';color:var(--ink3);font-size:12px}
+.tl .body .subs .pin:hover{background:rgba(110,143,118,.13)}
+.tl .body .subs .pin:active{background:rgba(110,143,118,.22)}
+/* 子地点备注：挂在子地点名字下面，缩进对齐、字号再小一号，纯展示不可点 */
+.tl .body .subs .sub-note{
+  display:block;font-size:12px;line-height:1.45;color:var(--ink3);
+  padding:1px 0 2px 18px;overflow-wrap:anywhere;
+}
+.tl-item.done .subs .pin{color:var(--ink3);text-decoration:line-through}
+/* 子地点挂的小红书帖子：跟图钉同一行的一个小 📕，点它开 App 看帖 */
+.tl .body .subs .xhs-btn{
+  margin-left:6px;padding:1px 6px;font-size:11.5px;line-height:1.5;
+}
+
+/* ---------- 地点搜索面板（全屏） ----------
+   搜索框钉在顶部：键盘从底部弹起只会压缩下方列表，搜索框永远看得见。
+   这就是它比「弹窗内嵌下拉」可靠的原因 —— 不跟键盘抢同一块空间。 */
+.place-panel{
+  position:fixed;inset:0;z-index:300;background:var(--paper);
+  display:flex;flex-direction:column;
+  animation:ppIn .2s ease;
+}
+.place-panel[hidden]{display:none}
+@keyframes ppIn{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+.pp-head{
+  flex:none;display:flex;align-items:center;gap:8px;
+  padding:12px 14px;border-bottom:1px solid var(--line);background:#fff;
+  /* 刘海屏安全区 */
+  padding-top:calc(12px + env(safe-area-inset-top, 0px));
+}
+.pp-back{
+  flex:none;width:34px;height:34px;border:none;background:transparent;
+  font-size:26px;line-height:1;color:var(--ink2);cursor:pointer;padding:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.pp-back:active{opacity:.6}
+.pp-search{
+  flex:1;min-width:0;display:flex;align-items:center;gap:8px;
+  background:var(--t-a,#F3F5F4);border-radius:11px;padding:0 11px;height:40px;
+}
+.pp-search .pp-ico{flex:none;font-size:13px;opacity:.7}
+.pp-search input{
+  flex:1;min-width:0;border:none;background:transparent;outline:none;
+  font-size:15px;color:var(--ink);padding:0;
+  /* 桌面留 15px 无妨；触屏上会被文件末尾那条 16px 规则接管 —— 见那里的说明 */
+}
+.pp-clear{
+  flex:none;width:20px;height:20px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(24,44,34,.12);color:var(--ink2);font-size:11px;line-height:1;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+.pp-clear[hidden]{display:none}
+.pp-confirm{
+  flex:none;display:flex;align-items:center;gap:12px;
+  padding:12px 14px;background:var(--fog);border-bottom:1px solid var(--line);
+  animation:ppIn .16s ease;
+}
+/* display:flex 会盖掉 [hidden] 自带的 display:none，必须显式补一条 */
+.pp-confirm[hidden]{display:none}
+.pp-confirm-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pp-confirm-txt b{font-size:14px;color:var(--forest);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-confirm-txt span{font-size:11.5px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-confirm-txt em{font-size:11.5px;color:#B4795A;font-style:normal}
+.pp-use{flex:none;padding:9px 16px;font-size:13px;border-radius:10px}
+.pp-list{
+  flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:6px 0 calc(16px + env(safe-area-inset-bottom, 0px));
+}
+.pp-item{
+  width:100%;display:flex;align-items:center;gap:11px;
+  padding:12px 15px;background:transparent;border:none;cursor:pointer;
+  text-align:left;font:inherit;color:inherit;
+  border-bottom:1px solid rgba(24,44,34,.06);
+  -webkit-tap-highlight-color:transparent;
+}
+.pp-item:last-child{border-bottom:none}
+.pp-item:hover,.pp-item.selected{background:var(--t-a,#EFF5F1)}
+.pp-item.selected .pp-item-go{color:#fff;background:var(--forest2)}
+.pp-item-ico{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  background:var(--forest2);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.pp-item.manual .pp-item-ico{background:#8A9791}
+.pp-item-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pp-item-name{font-size:14px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-item-addr{font-size:12px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-item-go{
+  flex:none;width:24px;height:24px;border-radius:50%;
+  border:1px solid var(--line);color:var(--forest2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;line-height:1;
+}
+.pp-tip{padding:14px 16px;font-size:12.5px;color:var(--ink3);text-align:center;line-height:1.6}
+.pp-tip.err{color:#B4795A}
+.pp-hint{padding:10px 15px 6px;font-size:12px;color:var(--ink3)}
+.pp-loading{padding:14px;font-size:12.5px;color:var(--ink3);text-align:center}
+
+
+/* ---------- 主按钮 ---------- */
+.btn-primary{
+  background:var(--forest2);color:#fff;border:none;border-radius:10px;
+  padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;transition:.18s;
+}
+.btn-primary:hover{background:var(--forest)}
+.btn-block{width:100%}
+
+/* ---------- 折叠（行程天） ---------- */
+/* 收起按钮现在放在 .day-bar 里（普通流布局），不再绝对定位 */
+.fold-btn{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--fog);border:1px solid var(--t-line,#DCE5DC);color:var(--forest2);
+  display:flex;align-items:center;justify-content:center;transition:transform .2s;flex:none;
+}
+.fold-btn svg{display:block}
+.day-main.collapsed .fold-btn{transform:rotate(-90deg)}
+.day-main.collapsed .tl,
+.day-main.collapsed .day-acts,
+.day-main.collapsed .day-foot,
+.day-main.collapsed .addbtn,
+.day-main.collapsed .sort-hint{display:none}
+/* 收起到只剩一条细横线时，卡片不留大块空白 */
+.day-main.collapsed{padding-bottom:16px}
+
+/* ---------- 行程类型选择（弹窗内） ---------- */
+.type-pick{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.type-opt{
+  padding:11px 4px;border:1.5px solid var(--line);border-radius:12px;
+  background:#fff;font-size:13px;font-weight:600;color:var(--ink2);
+  transition:.16s;letter-spacing:.01em;white-space:nowrap;
+}
+.type-opt:active{transform:scale(.97)}
+.type-opt.on{
+  border-color:var(--forest2);background:var(--fog);color:var(--forest);
+  box-shadow:0 2px 8px rgba(58,92,74,.12);
+}
+/* 时间行 / 时间开关行整行隐藏（用 hidden 属性，保留 display 默认行为） */
+#f-time-row[hidden],
+#f-timeon-row[hidden]{display:none}
+
+/* ---------- 小红书推荐帖（2026-09-22）----------
+   父条目和子地点都能各挂一篇：弹窗里粘链接，列表上点 📕 由系统接管打开
+   （装了 App 的手机直接进小红书看这篇）。 */
+.xhs-row{display:flex;align-items:center;gap:8px}
+/* 覆盖 .field-row input 的 width:100%，让输入框和 📕 挤在同一行 */
+.xhs-row input{flex:1;min-width:0}
+.xhs-go{
+  flex:none;border:1px solid var(--line);background:#fff;border-radius:10px;
+  padding:11px 13px;font-size:15px;line-height:1;font-family:inherit;cursor:pointer;
+}
+.xhs-go:hover{border-color:var(--forest2);background:var(--fog,#F4F8F5)}
+.xhs-go[hidden]{display:none}
+/* 列表里的入口：父条目一个胶囊按钮，子地点只有一个小 📕（上面单独写过） */
+.tl .body .xhs-line{margin-top:4px}
+.tl .body .xhs-btn{
+  display:inline-block;border:1px solid #F3C9C9;background:#FDF3F3;color:#D2403F;
+  border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600;
+  font-family:inherit;cursor:pointer;line-height:1.6;
+}
+.tl .body .xhs-btn:hover{background:#FBE7E7}
+
+/* ---------- 行程行上的类型小标 ---------- */
+/* 类型只在编辑弹窗里选择，列表上不再展示角标（已移除） */
+/* 标题空着时的灰色弱提示（不是真实内容，用户填了就消失） */
+.tl .body .t .untitled{color:var(--ink3);font-weight:400}
+
+/* ---------- 复选框标签 ---------- */
+.checkbox-label{
+  display:flex;align-items:center;gap:9px;font-size:14px;color:var(--ink);
+  cursor:pointer;font-weight:500;
+}
+.checkbox-label input{width:auto;margin:0;accent-color:var(--forest2)}
+
+/* ---------- 导航选择弹窗 ---------- */
+.nav-options{display:flex;gap:10px;margin-top:14px}
+.nav-opt{
+  flex:1;display:flex;align-items:center;gap:12px;padding:15px 14px;
+  border:1.5px solid var(--line);border-radius:14px;background:#fff;
+  transition:.18s;text-align:left;
+}
+.nav-opt:hover{border-color:var(--forest2);background:var(--t-a,#F7FAF8)}
+.nav-ico{font-size:26px;flex:none}
+.nav-txt{display:flex;flex-direction:column}
+.nav-txt b{font-size:15px;color:var(--ink);font-weight:700}
+.nav-txt small{font-size:12px;color:var(--ink3)}
+
+/* ---------- 点评引导 ---------- */
+.guide-steps{display:flex;flex-direction:column;gap:10px;margin:12px 0 14px}
+.guide-step{display:flex;gap:8px;font-size:13.5px;color:var(--ink);background:var(--t-a,#F7FAF8);border:1px solid var(--t-line,#E3ECE6);border-radius:10px;padding:10px 12px;line-height:1.6}
+.guide-step b{flex:none;color:var(--forest2);font-weight:700}
+
+/* ---------- 费用分摊 ---------- */
+.exp-summary{
+  position:relative;overflow:hidden;border-radius:18px;
+  background:var(--next-grad);
+  color:var(--hero-text);padding:20px 22px;margin-bottom:16px;
+  box-shadow:0 3px 6px rgba(20,40,30,.08),0 14px 30px rgba(20,40,30,.16);
+}
+.exp-summary::after{
+  content:"";position:absolute;right:-60px;top:-80px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--glow-rgb),.28),rgba(var(--glow-rgb),0) 68%);pointer-events:none;
+}
+.exp-summary-top{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.exp-total{flex:1;min-width:150px}
+.exp-total .lbl{font-size:11px;letter-spacing:.22em;color:var(--sun);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.exp-total .num{font-size:clamp(26px,4vw,36px);font-weight:800;line-height:1.1}
+.exp-avg{text-align:right}
+.exp-avg .lbl{font-size:11px;letter-spacing:.14em;color:var(--next-label);margin-bottom:6px}
+.exp-avg .num{font-size:19px;font-weight:700;color:#fff}
+.exp-settle{
+  margin-top:14px;padding-top:13px;border-top:1px solid rgba(255,255,255,.14);
+  font-size:13.5px;display:flex;flex-wrap:wrap;gap:6px 16px;position:relative;z-index:1;line-height:1.6;
+}
+.exp-settle > span{color:var(--next-label)}
+.exp-settle b{color:var(--sun);font-weight:700}
+.exp-settle .zero{color:var(--next-sub)}
+
+.exp-empty{font-size:13.5px;color:var(--ink3);padding:18px 6px;text-align:center}
+
+.exp-list{display:flex;flex-direction:column;gap:8px}
+
+/* 类型分组（2026-09-24 第十六轮）：组名整行可点，折叠时只收起这一组
+   （折叠状态存 localStorage，不进 data.json）。与购物清单的 .shop-group 同一套观感。 */
+.exp-group{margin-bottom:16px}
+.exp-group:last-child{margin-bottom:0}
+.exp-group-head{
+  width:100%;display:flex;align-items:center;gap:8px;
+  background:none;border:0;padding:6px 2px 10px;margin:0;
+  font-family:inherit;color:inherit;text-align:left;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.exp-group-t{font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:.02em}
+.exp-group-n{margin-left:auto;font-size:12px;color:var(--ink3);letter-spacing:.02em}
+.exp-group-chev{flex:none;color:var(--ink3);font-size:15px;line-height:1;transition:transform .18s}
+.exp-group.collapsed .exp-group-chev{transform:rotate(-90deg)}
+.exp-group.collapsed .exp-items{display:none}
+.exp-items{display:flex;flex-direction:column;gap:8px}
+
+.exp-item{
+  display:flex;align-items:center;gap:12px;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:.15s;
+}
+.exp-item:hover{border-color:var(--t-line,#C9D6CB)}
+.exp-cat{flex:none;font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600;white-space:nowrap}
+.exp-main{flex:1;min-width:0}
+.exp-main .t{font-size:14.5px;font-weight:600;word-break:break-word}
+.exp-main .s{font-size:12px;color:var(--ink3);margin-top:1px}
+.exp-amt{text-align:right;flex:none}
+.exp-amt .a{font-size:16px;font-weight:800;color:var(--ink)}
+.exp-amt .p{font-size:11.5px;color:var(--ink3)}
+
+.exp-cat-交通{background:#dbeafe;color:#1d4ed8}
+.exp-cat-住宿{background:#ede9fe;color:#6d28d9}
+.exp-cat-餐饮{background:#fef3c7;color:#b45309}
+.exp-cat-门票{background:#d1fae5;color:#047857}
+.exp-cat-其他{background:#e5e7eb;color:#4b5563}
+
+.part-check{display:flex;flex-wrap:wrap;gap:8px}
+.part-check label{
+  display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:999px;
+  border:1.5px solid var(--line);font-size:13px;cursor:pointer;transition:.15s;color:var(--ink2);
+}
+.part-check label.on{border-color:var(--forest2);background:var(--t-a,#EAF3EE);color:var(--forest2);font-weight:600}
+.part-check input{display:none}
+
+/* ---------- 同行成员（按角色）----------
+   费用按「谁垫的钱」算账，所以成员必须是具体的人（我 / 老婆 / 孩子），
+   不能是一行逗号分隔的文本，更不该是「2人」这种认不出是谁的写法。 */
+.mem-list{display:flex;flex-wrap:wrap;gap:7px}
+.mem-list:empty{display:none}
+.mem-chip{
+  display:inline-flex;align-items:center;gap:1px;border-radius:999px;
+  border:1.5px solid var(--forest2);background:var(--t-a,#EAF3EE);padding:3px 4px 3px 13px;
+}
+.mem-chip.editing{padding:3px 11px}
+.mem-chip .mem-name{
+  font-size:13.5px;font-weight:600;color:var(--forest2);font-family:inherit;
+  padding:2px 0;line-height:1.5;max-width:9em;overflow-wrap:anywhere;
+}
+.mem-chip .mem-name:hover{text-decoration:underline dotted}
+.mem-chip .mem-del{
+  font-size:12px;line-height:1;color:var(--forest2);opacity:.55;
+  padding:4px 7px;border-radius:999px;font-family:inherit;
+}
+.mem-chip .mem-del:hover{background:rgba(192,90,74,.14);color:#C05A4A;opacity:1}
+.mem-chip .mem-edit{
+  width:92px;border:0;background:transparent;padding:2px 0;font-size:13.5px;
+  font-weight:600;color:var(--forest2);font-family:inherit;outline:none;
+}
+.mem-chip .mem-edit:focus{border:0;box-shadow:none}
+.mem-add{display:flex;gap:8px;margin-top:8px}
+.mem-add input{flex:1;min-width:0;width:auto}
+.mem-add-btn{
+  flex:none;border:1px solid var(--line);border-radius:10px;background:#fff;
+  color:var(--forest2);font-size:13px;font-weight:600;font-family:inherit;padding:0 14px;
+}
+.mem-add-btn:hover{border-color:var(--forest2);background:var(--fog,#F4F8F5)}
+.mem-presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mem-presets:empty{display:none}
+.mem-preset{
+  border:1px dashed var(--line);border-radius:999px;background:#fff;
+  color:var(--ink2);font-size:12.5px;font-family:inherit;padding:3px 11px;
+}
+.mem-preset:hover{border-color:var(--forest2);color:var(--forest2)}
+.mem-hint{font-size:12px;color:var(--ink3);margin-top:7px;line-height:1.6}
+.mem-hint.warn{color:#B4762A}
+.mem-hint[hidden]{display:none}
+.mem-empty{font-size:12.5px;color:var(--ink3);padding:2px 0}
+/* 「几个人」：点一下就把角色铺出来，不用自己一个个加 */
+.party-pick{display:flex;flex-wrap:wrap;gap:6px}
+.party-chip{
+  border:1px solid var(--line);border-radius:10px;background:#fff;
+  color:var(--ink2);font-size:13px;font-weight:600;font-family:inherit;padding:5px 13px;
+}
+.party-chip:hover{border-color:var(--forest2);color:var(--forest2)}
+.party-chip.on{border-color:var(--forest2);background:var(--t-a,#EAF3EE);color:var(--forest2)}
+.party-chip.plus{padding:5px 11px;font-weight:700}
+.party-chip[disabled]{opacity:.38;cursor:not-allowed}
+
+/* 每个角色各该出多少（多人行程才显示）*/
+.exp-shares{
+  margin-top:13px;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;position:relative;z-index:1;
+}
+.exp-shares .sh-lbl{font-size:11px;letter-spacing:.14em;color:var(--next-label)}
+.exp-share{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;padding:3px 11px;font-size:12.5px;color:#fff;
+}
+.exp-share b{font-weight:700;color:var(--sun)}
+
+/* 费用条目里的「谁垫的」：对不上成员名单的显眼标出来 */
+.exp-main .s .who{color:var(--ink2);font-weight:600}
+.exp-main .s .who.miss{color:#C05A4A}
+/* 结算区下面的警示：垫付人不在名单里，账是加不平的 */
+.exp-warn{
+  margin-top:9px;font-size:12.5px;line-height:1.65;color:#8A4B12;
+  background:#FFF6E8;border:1px solid #F2D9AE;border-radius:10px;padding:8px 11px;
+}
+
+@media (max-width:760px){
+  .mem-add{gap:6px}
+  .mem-chip .mem-edit{width:74px}
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:760px){
+  .wrap{padding:0 16px}
+  .hero{border-radius:18px;min-height:230px}
+  .hero-inner{padding:20px 20px 20px}
+  .timeline::before{left:23px}
+  .day{grid-template-columns:52px 1fr;gap:13px}
+  .day-num{width:46px;height:46px;font-size:16px}
+  .day-date{font-size:10.5px}
+  .day-main{padding:14px 16px 18px;border-radius:15px}
+  .tl-item .item-row{grid-template-columns:60px 1fr;gap:10px}
+  .tl .time{font-size:12px}
+  .next-card{flex-direction:column;align-items:flex-start;gap:14px;padding:20px 19px;border-radius:17px}
+  .next-count{text-align:left}
+  .sec{margin-top:40px}
+  .sec-head h2{font-size:19px}
+  .nav-options{flex-direction:column}
+  .foot{padding-bottom:30px}
+}
+
+/* ---------- 触屏设备：表单控件字号一律 ≥16px（否则 iOS 会自动放大整个页面） ---------- */
+/* iOS Safari 的硬规则：聚焦的 input / select / textarea 只要 computed font-size 小于 16px，
+   Safari 就把整个页面放大（倍数 ≈ 16 ÷ 该控件字号，13px 的框＝1.23 倍）好让用户看清输入框，
+   而且**失焦之后不会还原** —— 现象就是「一编辑，整页变大、内容左右被裁，得手动捏合才回去」。
+   2026-09-18 用户反馈「为什么总是自己放大？默认缩放到最小不行吗」就是它。
+
+   三条看起来能治、其实都治不了的做法（别再走一遍弯路）：
+     ① -webkit-text-size-adjust:100%：只管横屏时的文字自适应，跟聚焦放大完全无关
+     ② maximum-scale=1：iOS 10+ 为无障碍忽略（Safari 要保证用户能捏合放大）
+     ③ user-scalable=no：同样被忽略；万一真生效了，反而害需要放大看小字的用户
+
+   唯一可靠的做法：让控件自己的字号达标。这里用 !important 全量兜底 ——
+   以后新增输入框不必逐个补，漏掉一个就又会触发放大。 */
+@media (pointer: coarse),(max-width:820px){
+  input,select,textarea{font-size:16px !important}
+  /* 顺带关掉双击缩放（误双击不再把页面放大）；捏合缩放不受影响 */
+  html,body{touch-action:manipulation}
+}
+
+/* ---------- 购物清单（2026-09-23）----------
+   页面最下方：待购物品清单，每件可配一张图（点图全屏放大）+ 一条小红书推荐帖（点 📕 开 App）。
+   图片不放在 data.json 里（那份文件有 1MB 读取上限，撑爆就整份读不回来），
+   实际存在数据仓的 shop/ 目录，这里只负责展示。
+   2026-09-23 二期：条目可带类型，列表按类型分组，点组名折叠/展开该组。 */
+.shop-count{font-size:12.5px;color:var(--ink3);margin-bottom:10px;letter-spacing:.02em}
+
+/* 类型分组：组名整行可点，折叠时只收起这一组（折叠状态存 localStorage，不进 data.json） */
+.shop-group{margin-bottom:16px}
+.shop-group:last-child{margin-bottom:0}
+.shop-group-head{
+  width:100%;display:flex;align-items:center;gap:8px;
+  background:none;border:0;padding:6px 2px 10px;margin:0;
+  font-family:inherit;color:inherit;text-align:left;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.shop-group-t{font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:.02em}
+.shop-group-n{margin-left:auto;font-size:12px;color:var(--ink3);letter-spacing:.02em}
+.shop-group-chev{flex:none;color:var(--ink3);font-size:15px;line-height:1;transition:transform .18s}
+.shop-group.collapsed .shop-group-chev{transform:rotate(-90deg)}
+.shop-group.collapsed .shop-items{display:none}
+
+/* 弹窗里的类型选择：四枚胶囊，再点一次已选中的那个 = 取消（回到未分类） */
+.shop-cats{display:flex;flex-wrap:wrap;gap:8px}
+.shop-cat{
+  border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:7px 14px;font-size:13.5px;color:var(--ink2);font-family:inherit;
+  cursor:pointer;line-height:1.5;min-height:38px;-webkit-tap-highlight-color:transparent;
+}
+.shop-cat:hover{border-color:var(--forest2);color:var(--forest)}
+.shop-cat.on{background:var(--forest);border-color:var(--forest);color:#fff}
+.shop-items{display:flex;flex-direction:column;gap:10px}
+.shop-empty{font-size:13.5px;color:var(--ink3);padding:18px 6px;text-align:center;line-height:1.9}
+
+.shop-item{
+  display:flex;align-items:center;gap:12px;padding:10px 12px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  cursor:pointer;transition:border-color .18s,box-shadow .18s;
+}
+.shop-item:hover{border-color:var(--forest2);box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.shop-item.done{opacity:.55}
+.shop-item.done .shop-name{text-decoration:line-through}
+
+/* 「已买到」勾选：点它只切换状态，不打开编辑弹窗（事件里 stopPropagation） */
+.shop-check{
+  flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);
+  background:#fff;color:#fff;font-size:14px;line-height:1;display:flex;
+  align-items:center;justify-content:center;padding:0;font-family:inherit;
+}
+.shop-check.on{background:var(--forest);border-color:var(--forest)}
+
+/* 缩略图：进视口才去云端取，图没到之前显示占位底 */
+.shop-thumb{
+  flex:none;width:64px;height:64px;border-radius:10px;overflow:hidden;position:relative;
+  background:var(--fog,#F4F8F5);border:1px solid var(--line);
+}
+.shop-thumb img{width:100%;height:100%;object-fit:cover;display:none}
+.shop-thumb.has img{display:block}
+.shop-thumb-ph{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:var(--ink3);opacity:.55;
+}
+.shop-thumb.has .shop-thumb-ph{display:none}
+.shop-thumb.failed .shop-thumb-ph{font-size:16px;opacity:1}
+
+.shop-main{flex:1;min-width:0}
+.shop-name{font-size:15px;font-weight:700;color:var(--ink);line-height:1.5;overflow-wrap:anywhere}
+.shop-note{font-size:12.5px;color:var(--ink3);line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+/* 清单里的小红书胶囊：与行程列表那枚同款配色 */
+.shop-main .xhs-btn{
+  display:inline-block;border:1px solid #F3C9C9;background:#FDF3F3;color:#D2403F;
+  border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600;
+  font-family:inherit;cursor:pointer;line-height:1.6;margin-top:4px;
+}
+.shop-main .xhs-btn:hover{background:#FBE7E7}
+.shop-chev{flex:none;color:var(--ink3);font-size:20px;line-height:1}
+
+/* 弹窗里的图片行 */
+.shop-img-row{display:flex;align-items:center;gap:10px}
+.shop-img-add{
+  border:1px dashed var(--line);background:#fff;border-radius:10px;
+  padding:10px 14px;font-size:13.5px;color:var(--ink2);font-family:inherit;cursor:pointer;
+  min-height:44px;
+}
+.shop-img-add:hover{border-color:var(--forest2);color:var(--forest)}
+.shop-img-add[hidden]{display:none}
+.shop-img-prev{position:relative;flex:none}
+.shop-img-prev[hidden]{display:none}
+.shop-img-prev img{
+  width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--line);
+  display:block;background:var(--fog,#F4F8F5);
+}
+.shop-img-del{
+  position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;
+  background:#fff;border:1px solid var(--line);color:var(--ink2);font-size:11px;line-height:1;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+.shop-img-del:hover{border-color:#C05A4A;color:#C05A4A}
+.shop-img-state{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.7}
+
+/* 图片放大（灯箱）：铺满全屏、点任意处关掉。
+   z-index 要压过 .modal-mask(200) 和 .place-panel(300)，否则被弹窗盖住。 */
+.img-view-mask{
+  position:fixed;inset:0;background:rgba(12,16,14,.92);z-index:400;
+  display:none;align-items:center;justify-content:center;padding:18px;
+  -webkit-tap-highlight-color:transparent;
+}
+.img-view-mask.show{display:flex}
+.img-view-mask img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.img-view-close{
+  position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.16);color:#fff;font-size:16px;line-height:1;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+.img-view-close:hover{background:rgba(255,255,255,.28)}
